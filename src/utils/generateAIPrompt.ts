@@ -36,7 +36,8 @@ function addSubSection(
 ) {
   const lines = extractLines(data, labels);
   if (lines.length === 0) return;
-  output.push(`\n  ${title} :`);
+  output.push('');
+  output.push(`  ${title} :`);
   output.push(...lines);
 }
 
@@ -85,7 +86,8 @@ function addAddictionHistory(output: string[], carteC: any) {
   }
 
   if (historyLines.length > 0) {
-    output.push(`\n  Antécédents de consommation (actuellement sevré/abstinent) :`);
+    output.push('');
+  output.push(`  Antécédents de consommation (actuellement sevré/abstinent) :`);
     output.push(...historyLines);
   }
 }
@@ -112,7 +114,8 @@ function addPersonalityDisorder(output: string[], carteT: any) {
     'Obsessionnelle-compulsive': 'C',
   };
 
-  output.push(`\n  Troubles de la personnalite :`);
+  output.push('');
+  output.push('  Troubles de la personnalite :');
 
   if (hasTroubleDSM) {
     const cluster = clusterMap[troubleSelectionne];
@@ -151,15 +154,18 @@ function addEchellesActuarielles(output: string[], dangerosite: any) {
   const echellesCompletes = dangerosite.echellesCompletes || [];
   if (echellesCompletes.length === 0) return;
 
-  output.push(`\n  === SYNTHÈSE DE LA DANGEROSITÉ ET DU RISQUE DE RÉCIDIVE ===`);
+  output.push('');
+  output.push('  === SYNTHÈSE DE LA DANGEROSITÉ ET DU RISQUE DE RÉCIDIVE ===');
   output.push(`- Dans le cadre de cette expertise de dangerosité, des outils clinico-actuariels structurés ont été cotés pour évaluer objectivement le risque de récidive.`);
-  output.push(`\n  ⚠️ DIRECTIVE STRICTE POUR L'IA :`);
+  output.push('');
+  output.push('  ⚠️ DIRECTIVE STRICTE POUR L\'IA :');
   output.push(`  L'expert a évalué le risque de récidive à l'aide d'outils structurés. Tu dois rédiger un paragraphe de synthèse médico-légale en distinguant clairement :`);
   output.push(`  1. Les facteurs de risque STATIQUES/HISTORIQUES (antécédents, caractéristiques immuables)`);
   output.push(`  2. Les facteurs de risque DYNAMIQUES/ÉVOLUTIFS (actuels, modifiables par le traitement)`);
   output.push(`  3. Les facteurs de PROTECTION/FORCES (éléments favorables, ressources du patient)`);
   output.push(`  Ne te contente pas de lister les scores. Intègre la synthèse clinique de l'expert et contextualise les résultats des échelles dans une argumentation cohérente et nuancée.`);
-  output.push(`\n  === Détails des échelles cotées ===`);
+  output.push('');
+  output.push('  === Détails des échelles cotées ===');
 
   for (const echelle of echellesCompletes) {
     const scaleDefinition = SCALES[echelle.scaleType];
@@ -173,7 +179,8 @@ function addEchellesActuarielles(output: string[], dangerosite: any) {
       ? Object.values(echelle.strengthScores).reduce((sum: number, val: any) => sum + (val || 0), 0)
       : 0;
 
-    output.push(`\n  - Échelle ${scaleDefinition.fullName}`);
+    output.push('');
+    output.push(`  - Échelle ${scaleDefinition.fullName}`);
 
     const isSexualViolenceScale = ['Static-99R', 'Static-2002R', 'SVR-20', 'STABLE-2007', 'CASIC', 'CPORT'].includes(echelle.scaleType);
     if (isSexualViolenceScale) {
@@ -312,7 +319,8 @@ function addEchellesActuarielles(output: string[], dangerosite: any) {
   const jps = dangerosite.syntheseJPS;
   const hasJPS = jps && [jps.sspi2, jps.static2002r, jps.discussionSVR20, jps.conclusions].some((t: string) => t?.trim());
   if (hasJPS) {
-    output.push(`\n  === SYNTHÈSE JPS (Jugement Professionnel Structuré) — Risque de récidive sexuelle ===`);
+    output.push('');
+    output.push("  === SYNTHÈSE JPS (Jugement Professionnel Structuré) — Risque de récidive sexuelle ===");
     if (jps.sspi2?.trim()) {
       output.push(`  1. SSPI-2 (intérêts pédophiliques) : ${jps.sspi2.trim()}`);
     }
@@ -328,7 +336,8 @@ function addEchellesActuarielles(output: string[], dangerosite: any) {
     output.push(`  CONSIGNE : Cette synthèse JPS rédigée par l'expert fait autorité. Intègre-la fidèlement dans la synthèse médico-légale en articulant mesures actuarielles (Static-2002R), dépistage (SSPI-2) et jugement clinique structuré (SVR-20).`);
   }
 
-  output.push(`\n  CONSIGNE IMPORTANTE POUR L'IA : Tu dois rédiger une synthèse argumentée et structurée sur la dangerosité psychiatrique et criminologique en intégrant les scores des échelles fournies ci-dessus et la clinique du patient. Cette synthèse doit être cohérente, nuancée et s'appuyer sur l'ensemble des éléments cliniques recueillis lors de l'examen. Prends particulièrement en compte les items cotés au maximum qui représentent les facteurs de risque les plus significatifs.`);
+  output.push('');
+  output.push("  CONSIGNE IMPORTANTE POUR L'IA : Tu dois rédiger une synthèse argumentée et structurée sur la dangerosité psychiatrique et criminologique en intégrant les scores des échelles fournies ci-dessus et la clinique du patient. Cette synthèse doit être cohérente, nuancée et s'appuyer sur l'ensemble des éléments cliniques recueillis lors de l'examen. Prends particulièrement en compte les items cotés au maximum qui représentent les facteurs de risque les plus significatifs.");
 }
 
 function buildInstructionsDiagnostiques(examen: any): string[] {
@@ -377,7 +386,8 @@ function addEvocationDiagnostique(output: string[], examen: any) {
   const instructions = buildInstructionsDiagnostiques(examen);
   if (instructions.length === 0) return;
 
-  output.push('\n=== ÉVOCATION DIAGNOSTIQUE AUTOMATIQUE ===');
+  output.push('');
+  output.push('=== ÉVOCATION DIAGNOSTIQUE AUTOMATIQUE ===');
   output.push(...instructions.map((i) => `- ${i.replace(/^-> /, '')}`));
 }
 
@@ -436,7 +446,8 @@ function addAntecedentsSymptomatologiques(output: string[], examen: any) {
     antecedentLines.push(line);
   }
 
-  output.push('\n=== ANTÉCÉDENTS PSYCHIATRIQUES SYMPTOMATOLOGIQUES ===');
+  output.push('');
+  output.push('=== ANTÉCÉDENTS PSYCHIATRIQUES SYMPTOMATOLOGIQUES ===');
   if (antecedentLines.length === 0) {
     output.push('- Aucun antécédent symptomatologique spécifique relevé à l\'interrogatoire.');
   } else {
@@ -672,7 +683,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
   addSubSection(output, 'Documents consultes', data.identification.carteE, L.IDENT_E);
   addComment(output, 'ident.carteE', c);
 
-  output.push('\n=== II. ANAMNESE BIOGRAPHIQUE ===');
+  output.push('');
+  output.push('=== II. ANAMNESE BIOGRAPHIQUE ===');
   addSubSection(output, 'Antecedents medicaux', data.anamnese.carteA, L.ANAM_A);
   addComment(output, 'anam.carteA', c);
   addSubSection(output, 'Antecedents psychiatriques', data.anamnese.carteB, L.ANAM_B);
@@ -693,8 +705,20 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
   addSubSection(output, 'Vie sexuelle', data.anamnese.carteI, L.ANAM_I);
   addComment(output, 'anam.carteI', c);
 
-  output.push('\n⚠️ RÈGLE STRICTE POUR LA SECTION III (EXAMEN PSYCHIATRIQUE) : Tu dois faire une distinction ABSOLUE entre la symptomatologie ACTUELLE (constatée le jour de l\'examen) et les ANTÉCÉDENTS (éléments passés).\nNe mélange JAMAIS les deux temporalités.\nSi un syndrome est noté \'Présent : Non\' ou absent dans les données actuelles, tu dois conclure à l\'absence de ce syndrome actuel, SANS utiliser les données des antécédents pour justifier des symptômes actuels atténués.\nRédige l\'examen en deux temps clairs : d\'abord l\'évaluation transversale (l\'état actuel au moment de l\'examen), puis l\'évaluation longitudinale (les antécédents psychiatriques listés dans la sous-section dédiée). Les antécédents doivent rester au passé.\n\nÀ la toute fin de la Section III, après avoir décrit de manière strictement séparée l\'état clinique actuel d\'une part, et les antécédents psychiatriques d\'autre part, tu dois IMPÉRATIVEMENT rédiger un paragraphe de synthèse intitulé "Analyse Clinique Évolutive".\nDans ce paragraphe, tu dois :\n- Établir un lien comparatif clair entre les antécédents décrits et l\'état observé le jour de l\'expertise (ex : s\'agit-il d\'une stabilisation, d\'une rémission partielle ou totale, d\'une aggravation, ou d\'une chronicisation ?).\n- Formuler une analyse clinique sur l\'origine probable de cette évolution temporelle (ex : évolution naturelle de la pathologie, efficacité thérapeutique, iatrogénie, rupture de soins, impact d\'un événement de vie intercurrent).\n- Rédiger cette analyse sous forme de texte continu, fluide et argumenté (style médico-légal et littéraire). L\'utilisation de listes à puces est strictement interdite pour ce paragraphe de synthèse.');
-  output.push('\n=== III. EXAMEN PSYCHIATRIQUE ===');
+  output.push('');
+  output.push('⚠️ RÈGLE STRICTE POUR LA SECTION III (EXAMEN PSYCHIATRIQUE) :');
+  output.push("Tu dois faire une distinction ABSOLUE entre la symptomatologie ACTUELLE (constatée le jour de l'examen) et les ANTÉCÉDENTS (éléments passés).");
+  output.push("Ne mélange JAMAIS les deux temporalités.");
+  output.push("Si un syndrome est noté 'Présent : Non' ou absent dans les données actuelles, tu dois conclure à l'absence de ce syndrome actuel, SANS utiliser les données des antécédents pour justifier des symptômes actuels atténués.");
+  output.push("Rédige l'examen en deux temps clairs : d'abord l'évaluation transversale (l'état actuel au moment de l'examen), puis l'évaluation longitudinale (les antécédents psychiatriques listés dans la sous-section dédiée). Les antécédents doivent rester au passé.");
+  output.push('');
+  output.push("À la toute fin de la Section III, après avoir décrit de manière strictement séparée l'état clinique actuel d'une part, et les antécédents psychiatriques d'autre part, tu dois IMPÉRATIVEMENT rédiger un paragraphe de synthèse intitulé \"Analyse Clinique Évolutive\".");
+  output.push("Dans ce paragraphe, tu dois :");
+  output.push("- Établir un lien comparatif clair entre les antécédents décrits et l'état observé le jour de l'expertise (ex : s'agit-il d'une stabilisation, d'une rémission partielle ou totale, d'une aggravation, ou d'une chronicisation ?).");
+  output.push("- Formuler une analyse clinique sur l'origine probable de cette évolution temporelle (ex : évolution naturelle de la pathologie, efficacité thérapeutique, iatrogénie, rupture de soins, impact d'un événement de vie intercurrent).");
+  output.push("- Rédiger cette analyse sous forme de texte continu, fluide et argumenté (style médico-légal et littéraire). L'utilisation de listes à puces est strictement interdite pour ce paragraphe de synthèse.");
+  output.push('');
+  output.push('=== III. EXAMEN PSYCHIATRIQUE ===');
   addSubSection(output, 'Presentation et contact', data.examen_psychiatrique.carteA, L.EXAM_A);
   addComment(output, 'exam.carteA', c);
 
@@ -705,7 +729,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
     data.biometric_data.frequenceCardiaque;
 
   if (hasBiometricData) {
-    output.push('\n=== III bis. CONSTANTES ET DONNEES BIOMETRIQUES ===');
+    output.push('');
+    output.push('=== III bis. CONSTANTES ET DONNEES BIOMETRIQUES ===');
     if (data.biometric_data.poids) {
       output.push(`- Poids : ${data.biometric_data.poids} kg`);
     }
@@ -782,7 +807,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
   addEvocationDiagnostique(output, data.examen_psychiatrique);
 
   if (isExpertise) {
-    output.push('\n=== IV. EXAMEN AU MOMENT DES FAITS ===');
+    output.push('');
+    output.push('=== IV. EXAMEN AU MOMENT DES FAITS ===');
     addSubSection(output, 'Comprehension des faits', data.examen_faits.comprehension, L.FAITS_COMPREHENSION);
     addComment(output, 'faits.comprehension', c);
     addSubSection(output, 'Reconnaissance', data.examen_faits.reconnaissance, L.FAITS_RECONNAISSANCE);
@@ -796,7 +822,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
     addSubSection(output, 'Premeditation', data.examen_faits.premeditation, L.FAITS_PREMEDITATION);
     addComment(output, 'faits.premeditation', c);
 
-    output.push('\n=== V. RELATION FAITS / ETAT MENTAL ===');
+    output.push('');
+    output.push('=== V. RELATION FAITS / ETAT MENTAL ===');
     addSubSection(output, 'Explications psychiatriques', data.relation_faits.explications, L.REL_EXPLICATIONS);
     addComment(output, 'rel.explications', c);
     addSubSection(output, 'Lien de causalite', data.relation_faits.causalite, L.REL_CAUSALITE);
@@ -805,12 +832,14 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
 
   const instructionsDiag = buildInstructionsDiagnostiques(data.examen_psychiatrique);
   if (instructionsDiag.length > 0) {
-    output.push('\n⚠️ INSTRUCTIONS DIAGNOSTIQUES OBLIGATOIRES POUR LA RÉDACTION :');
+    output.push('');
+    output.push('⚠️ INSTRUCTIONS DIAGNOSTIQUES OBLIGATOIRES POUR LA RÉDACTION :');
     output.push(...instructionsDiag);
   }
 
   const sectionNumber = isExpertise ? 'VI' : 'IV';
-  output.push(`\n=== ${sectionNumber}. DIAGNOSTIC ===`);
+  output.push('');
+  output.push(`=== ${sectionNumber}. DIAGNOSTIC ===`);
   addSubSection(output, 'Diagnostic principal', data.diagnostic.principal, L.DIAG_PRINCIPAL);
   addComment(output, 'diag.principal', c);
   if (data.diagnostic.diagnosticsAssocies?.trim()) {
@@ -828,7 +857,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
   addComment(output, 'diag.complementaires', c);
 
   if (isExpertise) {
-    output.push('\n=== VII. EVALUATION MEDICO-LEGALE ===');
+    output.push('');
+    output.push('=== VII. EVALUATION MEDICO-LEGALE ===');
     const { alinea1, alinea2, accessibilite } = data.evaluation;
     if (alinea1.aboli !== 'NR') {
       output.push(`- Art. 122-1 al.1 (Abolition du discernement) : ${alinea1.aboli}`);
@@ -858,7 +888,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
     }
     addComment(output, 'eval.accessibilite', c);
 
-    output.push('\n=== VIII. DANGEROSITE ===');
+    output.push('');
+    output.push('=== VIII. DANGEROSITE ===');
     addEchellesActuarielles(output, data.dangerosite);
     addSubSection(output, 'Dangerosite psychiatrique', data.dangerosite.dangerositePsychiatrique, L.DANG_PSYCHIATRIQUE);
     addSubSection(output, 'Risque de recidive', data.dangerosite.risqueRecidive, L.DANG_RECIDIVE);
@@ -879,7 +910,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
       (e) => e.scaleType && Object.keys(e.scores).length > 0
     );
     if (scoredEchelles.length > 0) {
-      output.push('\n=== ÉCHELLES D\'ÉVALUATION CLINIQUE ===');
+      output.push('');
+      output.push("=== ÉCHELLES D'ÉVALUATION CLINIQUE ===");
       for (const entry of scoredEchelles) {
         const scale = SCALES[entry.scaleType];
         if (!scale) continue;
@@ -1034,7 +1066,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
   }
 
   if (isExpertise) {
-    output.push('\n=== IX. CONCLUSIONS ===');
+    output.push('');
+    output.push('=== IX. CONCLUSIONS ===');
     if (data.conclusions.syntheseClinique?.trim()) {
       output.push(`\n  Synthese clinique :`);
       output.push(`- ${data.conclusions.syntheseClinique}`);
@@ -1050,7 +1083,8 @@ PLAN RESPECTÉ : Tu dois conserver la structure en chapitres et les titres deman
     }
     addComment(output, 'concl.carte2', c);
   } else {
-    output.push('\n=== V. PROPOSITIONS DE SOINS ===');
+    output.push('');
+    output.push('=== V. PROPOSITIONS DE SOINS ===');
     if (data.propositions_soins.propositionsTherapeutiques?.trim()) {
       output.push(`\n  Propositions therapeutiques :`);
       output.push(`- ${data.propositions_soins.propositionsTherapeutiques}`);
