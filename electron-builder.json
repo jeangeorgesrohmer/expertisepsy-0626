@@ -1,0 +1,26 @@
+{
+  "appId": "com.expertise.psychiatrique",
+  "productName": "Expertise Psychiatrique",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*"
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": null
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "installerLanguages": ["fr"],
+    "language": "1036"
+  }
+}

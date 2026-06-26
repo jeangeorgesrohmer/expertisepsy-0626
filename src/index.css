@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.report-document {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #1e293b;
+  line-height: 1.7;
+  font-size: 0.9375rem;
+}
+
+.report-document h1,
+.report-document h2,
+.report-document h3 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.report-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #0f172a;
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid #1e293b;
+  page-break-after: avoid;
+}
+
+.report-subsection-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.4rem;
+  padding-left: 0.125rem;
+  page-break-after: avoid;
+}
+
+.report-field-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.125rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .report-field-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.report-field-grid .report-field-item {
+  display: flex;
+  gap: 0.375rem;
+  padding: 0.2rem 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.report-field-grid .report-field-item:last-child,
+.report-field-grid .report-field-item:nth-last-child(2):nth-child(odd) {
+  border-bottom: none;
+}
+
+.report-field-label {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.report-field-value {
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.report-text-block {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: #1e293b;
+  white-space: pre-wrap;
+  text-align: justify;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 15mm;
+  }
+
+  html, body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+    background: white !important;
+  }
+
+  .report-document {
+    font-size: 10pt;
+    line-height: 1.55;
+  }
+
+  .report-section {
+    break-inside: avoid;
+  }
+
+  .report-section-title {
+    font-size: 11pt;
+  }
+
+  .report-subsection-title {
+    font-size: 9.5pt;
+  }
+
+  .report-field-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .report-field-grid .report-field-item {
+    font-size: 9pt;
+  }
+
+  .report-text-block {
+    font-size: 9.5pt;
+    line-height: 1.6;
+  }
+
+  /* Échelles d'évaluation du risque - styles d'impression optimisés */
+  .print\:break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Assurer que les couleurs des niveaux de risque sont imprimées */
+  .text-green-700,
+  .text-green-600,
+  .text-yellow-700,
+  .text-orange-700,
+  .text-red-700,
+  .text-blue-700,
+  .text-rose-700 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* Bordures et arrière-plans pour les échelles */
+  .border-stone-200,
+  .border-blue-200,
+  .border-rose-200 {
+    border-color: #e7e5e4 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .bg-stone-50,
+  .bg-blue-50,
+  .bg-rose-50 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+}
